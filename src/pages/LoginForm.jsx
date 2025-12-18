@@ -10,6 +10,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [Error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -24,6 +25,7 @@ const LoginForm = () => {
       dispatch(addUser(res.data.data));
       return navigate("/feed");
     } catch (err) {
+      setError(err?.response?.data || "Something Went Wrong!!!");
       console.error("❌ Login failed:", err);
     }
   };
@@ -50,8 +52,8 @@ const LoginForm = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <button className="btn btn-neutral mt-4" onClick={handleLogin}>
+          <p className="text-red-800 font-semibold ">{Error}</p>
+          <button className="btn btn-neutral mt-3" onClick={handleLogin}>
             Login
           </button>
         </fieldset>
