@@ -1,8 +1,11 @@
 import React from "react";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { removeRequest } from "../utils/requestSlice";
 
 const RequestCard = ({ request }) => {
+  const dispatch = useDispatch();
   const reviewRequests = async (status, _id) => {
     try {
       const res = await axios.post(
@@ -12,6 +15,7 @@ const RequestCard = ({ request }) => {
           withCredentials: true,
         }
       );
+      dispatch(removeRequest(request._id));
     } catch (err) {}
   };
   const { photoUrl, age, gender, about, firstName, lastName } =
