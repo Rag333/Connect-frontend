@@ -60,6 +60,9 @@ const Navbar = () => {
                   <Link to={"/request"}>Request</Link>
                 </li>
                 <li>
+                  <Link to={"/feed"}>Feed</Link>
+                </li>
+                <li>
                   <a onClick={handleLogout}>Logout</a>
                 </li>
               </ul>

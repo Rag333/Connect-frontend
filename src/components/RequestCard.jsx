@@ -21,7 +21,10 @@ const RequestCard = ({ request }) => {
                 {age}, {gender}
               </p>
             )}
-            <p>{about}</p>
+            <button class="flex justify-between gap-15">
+              <button class="btn btn-success">Accept ✅</button>
+              <button class="btn btn-error">Reject ❌</button>
+            </button>
           </div>
         </div>
       </div>

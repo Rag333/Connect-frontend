@@ -32,7 +32,9 @@ const Connection = () => {
   if (connections.length === 0) {
     return (
       <>
-        <h1>No Connection Found</h1>
+        <h1 className="flex justify-center items-center m-7  font-bold">
+          No Connection Found
+        </h1>
       </>
     );
   }

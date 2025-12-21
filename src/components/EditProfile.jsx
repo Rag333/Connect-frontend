@@ -14,7 +14,7 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user?.gender || "");
   const [age, setAge] = useState(user?.age || "");
   const [about, setAbout] = useState(user?.about || "");
-  const [skills, setSkills] = useState(user?.skills || "");
+  const [skills, setSkills] = useState(user?.skills?.join(", ") || "");
   const [error, setError] = useState("");
   const saveProfile = async () => {
     try {
@@ -30,13 +30,8 @@ const EditProfile = ({ user }) => {
       setTimeout(() => setShowToast(false), 1000);
     } catch (err) {
       setError(err.response.data);
-      console.error(err);
     }
   };
-
-  useEffect(() => {
-    saveProfile();
-  }, []);
 
   return (
     <>
@@ -80,11 +75,11 @@ const EditProfile = ({ user }) => {
             />
             <label className="label">Age</label>
             <input
-              type="text"
+              type="number"
               className="input"
               placeholder="Age"
               value={age}
-              onChange={(e) => setAge(e.target.value)}
+              onChange={(e) => setAge(Number(e.target.value))}
             />
             <label className="label">About</label>
             <input
@@ -102,7 +97,7 @@ const EditProfile = ({ user }) => {
               placeholder="Skills"
               onChange={(e) => setSkills(e.target.value)}
             />
-            <p className="text-red-600 font-semibold">{error}</p>
+            {error && <p className="text-red-600 font-semibold">{error}</p>}
 
             <button className="btn btn-neutral mt-3" onClick={saveProfile}>
               Save Profile
