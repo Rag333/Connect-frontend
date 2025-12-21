@@ -1,6 +1,19 @@
 import React from "react";
+import { BASE_URL } from "../utils/constants";
+import axios from "axios";
 
 const RequestCard = ({ request }) => {
+  const reviewRequests = async (status, _id) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+    } catch (err) {}
+  };
   const { photoUrl, age, gender, about, firstName, lastName } =
     request.fromUserId;
   return (
@@ -21,10 +34,20 @@ const RequestCard = ({ request }) => {
                 {age}, {gender}
               </p>
             )}
-            <button class="flex justify-between gap-15">
-              <button class="btn btn-success">Accept ✅</button>
-              <button class="btn btn-error">Reject ❌</button>
-            </button>
+            <div className="flex justify-between gap-15">
+              <button
+                className="btn btn-success"
+                onClick={() => reviewRequests("accepted", request._id)}
+              >
+                Accept ✅
+              </button>
+              <button
+                className="btn btn-error"
+                onClick={() => reviewRequests("rejected", request._id)}
+              >
+                Reject ❌
+              </button>
+            </div>
           </div>
         </div>
       </div>

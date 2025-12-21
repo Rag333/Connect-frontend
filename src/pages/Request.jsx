@@ -37,8 +37,8 @@ const Request = () => {
 
       <div className="flex flex-wrap">
         {requests.map((request) => (
-          <div className="flex-row items-start ">
-            {<RequestCard request={request} />}
+          <div key={request._id} className="flex-row items-start ">
+            {<RequestCard request={request} requestId={request._id} />}
           </div>
         ))}
       </div>

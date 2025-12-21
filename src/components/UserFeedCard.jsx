@@ -1,6 +1,7 @@
 import React from "react";
 
 const UserFeedCard = ({ user }) => {
+  if (!user) return null;
   const { firstName, lastName, age, gender, skills, photoUrl, about } = user;
   return (
     <div className="card bg-base-100 w-96 shadow-sm">

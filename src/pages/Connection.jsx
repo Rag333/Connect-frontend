@@ -42,9 +42,11 @@ const Connection = () => {
   return (
     <div className=" justify-center my-10">
       <h1 className=" font-bold text-2xl text-center"> Connection </h1>
-      {connections.map((connection) => (
-        <div>{<ConnectionCard connection={connection} />}</div>
-      ))}
+      <div className="flex">
+        {connections.map((connection) => (
+          <div>{<ConnectionCard connection={connection} />}</div>
+        ))}
+      </div>
     </div>
   );
 };
