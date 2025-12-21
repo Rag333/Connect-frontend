@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { BASE_URL } from "../utils/constants";
+import EditProfile from "../components/EditProfile";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-  return <div>Profile</div>;
+  const user = useSelector((store) => store.user);
+  const getProfile = async () => {
+    const res = await axios(BASE_URL + "/profile/view", {});
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  return (
+    user && (
+      <div>
+        <EditProfile user={user} />
+      </div>
+    )
+  );
 };
 
 export default Profile;

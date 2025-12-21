@@ -6,6 +6,8 @@ import LoginForm from "./pages/LoginForm";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import FeedPage from "./pages/FeedPage";
+import Connection from "./pages/Connection";
+import Request from "./pages/Request";
 
 const App = () => {
   return (
@@ -17,6 +19,9 @@ const App = () => {
               <Route path="/feed" element={<FeedPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<LoginForm />} />
+              <Route path="/connection" element={<Connection />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/request" element={<Request />} />
             </Route>
           </Routes>
         </BrowserRouter>
