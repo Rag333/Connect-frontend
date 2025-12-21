@@ -24,6 +24,17 @@ const FeedPage = () => {
   useEffect(() => {
     getFeed();
   }, []);
+  if (!feed) {
+    return;
+  }
+
+  if (feed.length === 0) {
+    return (
+      <div className="font-semibold flex justify-center m-5 text-red-600">
+        No New User Found !!!
+      </div>
+    );
+  }
   return (
     feed && (
       <div className=" flex justify-center my-14">
