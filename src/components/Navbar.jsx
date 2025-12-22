@@ -90,6 +90,7 @@ const Navbar = () => {
                 <li>
                   <Link to={"/feed"}>Feed</Link>
                 </li>
+
                 <li>
                   <a onClick={handleLogout}>Logout</a>
                 </li>
