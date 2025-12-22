@@ -42,7 +42,7 @@ const Connection = () => {
   return (
     <div className=" justify-center my-10">
       <h1 className=" font-bold text-2xl text-center"> Connection </h1>
-      <div className="flex">
+      <div className="flex flex-wrap gap-10">
         {connections.map((connection) => (
           <div>{<ConnectionCard connection={connection} />}</div>
         ))}

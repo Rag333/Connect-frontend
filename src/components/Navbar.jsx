@@ -18,8 +18,8 @@ const Navbar = () => {
     }
   };
   return (
-    <div>
-      <div className="navbar bg-base-100 shadow-sm">
+    <div className="sticky top-0 z-30 ">
+      <div className="navbar bg-base-100 shadow-sm ">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost text-xl">
             ConnectwMe

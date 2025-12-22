@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
+import HomePage from "../pages/HomePage";
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -29,13 +30,14 @@ const Body = () => {
       console.error(err);
     }
   };
+
   useEffect(() => {
     fetchUser();
   }, []);
   return (
     <div>
       <Navbar />
-      <Outlet />
+      {location.pathname === "/" ? <HomePage /> : <Outlet />}
       <Footer />
     </div>
   );

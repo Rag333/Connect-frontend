@@ -24,7 +24,11 @@ const UserFeedCard = ({ user }) => {
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
       <figure>
-        <img src={photoUrl} alt="User Photo" className="h-90 w-100" />
+        <img
+          src={photoUrl}
+          alt="User Photo"
+          className="h-80 w-80 mt-4 rounded-2xl"
+        />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName}</h2>

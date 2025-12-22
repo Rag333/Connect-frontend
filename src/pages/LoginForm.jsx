@@ -8,6 +8,9 @@ import { BASE_URL } from "../utils/constants";
 const LoginForm = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [Error, setError] = useState("");
@@ -29,11 +32,46 @@ const LoginForm = () => {
       console.error("❌ Login failed:", err);
     }
   };
+
+  const handleSignUp = async () => {
+    const res = await axios.post(
+      BASE_URL + "/signUp",
+      { emailId, password, firstName, lastName },
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch(addUser(res.data.data));
+    return navigate("/profile");
+  };
   return (
     <div className="flex">
-      <div className="flex items-center justify-center h-100 w-screen">
+      <div className="flex items-center justify-center h-120 w-screen">
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend">Login</legend>
+          <legend className="fieldset-legend">
+            {isLoggedIn ? "Login" : "SignUp"}
+          </legend>
+
+          {!isLoggedIn && (
+            <>
+              <label className="label">First Name</label>
+              <input
+                type="text"
+                className="input"
+                value={firstName}
+                placeholder="First Name"
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <label className="label">Last Name</label>
+              <input
+                type="text"
+                className="input"
+                value={lastName}
+                placeholder="Last Name"
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </>
+          )}
 
           <label className="label">Email</label>
           <input
@@ -53,9 +91,21 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <p className="text-red-800 font-semibold ">{Error}</p>
-          <button className="btn btn-neutral mt-3" onClick={handleLogin}>
-            Login
+          <button
+            className="btn btn-neutral mt-3"
+            onClick={isLoggedIn ? handleLogin : handleSignUp}
+          >
+            {isLoggedIn ? "Login" : "SignUp"}
           </button>
+
+          <p
+            className="flex justify-center cursor-pointer text-blue-600 hover:underline"
+            onClick={() => setIsLoggedIn(!isLoggedIn)}
+          >
+            {isLoggedIn
+              ? "New User ? SignUp here"
+              : "Existing User ? Login Here"}
+          </p>
         </fieldset>
       </div>
     </div>
