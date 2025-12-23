@@ -12,9 +12,11 @@ const ConnectionCard = ({ connection }) => {
           />
         </figure>
         <div className="card-body items-center text-center">
-          <h2 className="card-title">{connection.firstName}</h2>
+          <h2 className="card-title">
+            {connection.firstName + " " + connection.lastName}
+          </h2>
           <p>
-            {connection.age}, {connection.gender}
+            {connection.age} {connection.gender}
           </p>
           <p>{connection.about}</p>
         </div>
