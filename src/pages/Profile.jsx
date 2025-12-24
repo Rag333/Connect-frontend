@@ -7,7 +7,13 @@ import { useSelector } from "react-redux";
 const Profile = () => {
   const user = useSelector((store) => store.user);
   const getProfile = async () => {
-    const res = await axios(BASE_URL + "/profile/view", {});
+    const res = await axios(
+      BASE_URL + "/profile/view",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
   };
 
   useEffect(() => {

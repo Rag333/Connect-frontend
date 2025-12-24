@@ -13,7 +13,7 @@ const LoginForm = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [Error, setError] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -28,21 +28,31 @@ const LoginForm = () => {
       dispatch(addUser(res.data.data));
       return navigate("/feed");
     } catch (err) {
-      setError(err?.response?.data || "Something Went Wrong!!!");
-      console.error("❌ Login failed:", err);
+      const message =
+        err?.response?.data?.message ||
+        err?.response?.data ||
+        "Something went wrong";
+
+      setError(message);
+      console.error("❌ SignUp failed:", err);
     }
   };
 
   const handleSignUp = async () => {
-    const res = await axios.post(
-      BASE_URL + "/signUp",
-      { emailId, password, firstName, lastName },
-      {
-        withCredentials: true,
-      }
-    );
-    dispatch(addUser(res.data.data));
-    return navigate("/profile");
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { emailId, password, firstName, lastName },
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(addUser(res.data.data));
+      return navigate("/profile");
+    } catch (err) {
+      setError(err?.response?.data || "Something Went Wrong!!!");
+      console.error("❌ SignUp failed:", err);
+    }
   };
   return (
     <div className="flex">
@@ -90,7 +100,7 @@ const LoginForm = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <p className="text-red-800 font-semibold ">{Error}</p>
+          <p className="text-red-800 font-semibold ">{error}</p>
           <button
             className="btn btn-neutral mt-3"
             onClick={isLoggedIn ? handleLogin : handleSignUp}
