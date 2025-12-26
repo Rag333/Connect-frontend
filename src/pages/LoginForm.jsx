@@ -5,6 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 
+/**
+ * Safely extract meaningful error message from axios error
+ */
+const getErrorMessage = (err) => {
+  if (err.response) {
+    const data = err.response.data;
+
+    if (typeof data === "string") return data;
+    if (data?.message) return data.message;
+    if (data?.error) return data.error;
+
+    return "Request failed. Please try again.";
+  }
+
+  if (err.request) {
+    return "Server not reachable. Please check your connection.";
+  }
+
+  return err.message || "Something went wrong";
+};
+
 const LoginForm = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [emailId, setEmailId] = useState("");
@@ -12,13 +33,17 @@ const LoginForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 🔐 LOGIN
   const handleLogin = async () => {
     try {
       setError("");
+      setLoading(true);
+
       const res = await axios.post(
         `${BASE_URL}/login`,
         { emailId, password },
@@ -28,10 +53,13 @@ const LoginForm = () => {
       dispatch(addUser(res.data.data));
       navigate("/feed");
     } catch (err) {
-      setError(err?.response?.data?.message || "Login failed");
+      setError(getErrorMessage(err));
+    } finally {
+      setLoading(false);
     }
   };
 
+  // 🆕 SIGNUP
   const handleSignUp = async () => {
     if (!firstName || !lastName || !emailId || !password) {
       setError("All fields are required");
@@ -40,6 +68,8 @@ const LoginForm = () => {
 
     try {
       setError("");
+      setLoading(true);
+
       const res = await axios.post(
         `${BASE_URL}/signup`,
         { firstName, lastName, emailId, password },
@@ -49,14 +79,16 @@ const LoginForm = () => {
       dispatch(addUser(res.data.data));
       navigate("/profile");
     } catch (err) {
-      setError(err?.response?.data?.message || "Signup failed");
+      setError(getErrorMessage(err));
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <fieldset className="fieldset bg-base-200 rounded-box w-xs border p-4">
-        <legend className="fieldset-legend">
+    <div className="flex justify-center items-center min-h-98">
+      <fieldset className="fieldset bg-base-200 rounded-box w-xs border p-6">
+        <legend className="fieldset-legend text-lg font-semibold">
           {isLoginMode ? "Login" : "Sign Up"}
         </legend>
 
@@ -65,8 +97,8 @@ const LoginForm = () => {
             <label className="label">First Name</label>
             <input
               className="input"
-              value={firstName}
               placeholder="First Name"
+              value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
 
@@ -98,17 +130,20 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {error && <p className="text-red-600 mt-2">{error}</p>}
+        {error && (
+          <p className="text-red-600 mt-3 text-sm text-center">{error}</p>
+        )}
 
         <button
-          className="btn btn-neutral mt-4"
+          className="btn btn-neutral mt-4 w-full"
+          disabled={loading}
           onClick={isLoginMode ? handleLogin : handleSignUp}
         >
-          {isLoginMode ? "Login" : "Sign Up"}
+          {loading ? "Please wait..." : isLoginMode ? "Login" : "Sign Up"}
         </button>
 
         <p
-          className="text-blue-600 text-center cursor-pointer mt-2"
+          className="text-blue-600 text-center cursor-pointer mt-3 text-sm"
           onClick={() => {
             setIsLoginMode(!isLoginMode);
             setError("");

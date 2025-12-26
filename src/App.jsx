@@ -11,22 +11,19 @@ import Request from "./pages/Request";
 
 const App = () => {
   return (
-    <div>
-      <Provider store={appStore}>
-        <BrowserRouter basename="/">
-          <Routes>
-            <Route path="/" element={<Body />}>
-              <Route path="/feed" element={<FeedPage />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/connection" element={<Connection />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/request" element={<Request />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
-    </div>
+    <Provider store={appStore}>
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/connection" element={<Connection />} />
+            <Route path="/request" element={<Request />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

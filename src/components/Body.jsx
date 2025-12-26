@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Navbar from "./Navbar";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -11,12 +11,12 @@ import HomePage from "../pages/HomePage";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const userData = useSelector((store) => store.user);
 
   const fetchUser = async () => {
-    if (userData) {
-      return;
-    }
+    if (userData) return;
+
     try {
       const res = await axios(BASE_URL + "/profile/view", {
         withCredentials: true,
@@ -26,7 +26,6 @@ const Body = () => {
       if (err.response?.status === 401) {
         navigate("/login");
       }
-
       console.error(err);
     }
   };
@@ -34,10 +33,18 @@ const Body = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   return (
-    <div>
+    // 🔑 THIS DIV FIXES EVERYTHING
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      {location.pathname === "/" ? <HomePage /> : <Outlet />}
+
+      {/* MAIN CONTENT */}
+      <main className="flex-grow">
+        {location.pathname === "/" ? <HomePage /> : <Outlet />}
+      </main>
+
+      {/* FOOTER ALWAYS AT BOTTOM */}
       <Footer />
     </div>
   );
