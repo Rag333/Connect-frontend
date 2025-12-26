@@ -1,123 +1,122 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 
 const LoginForm = () => {
+  const [isLoginMode, setIsLoginMode] = useState(true);
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
+      setError("");
       const res = await axios.post(
-        BASE_URL + "/login",
-        {
-          emailId,
-          password,
-        },
+        `${BASE_URL}/login`,
+        { emailId, password },
         { withCredentials: true }
       );
-      dispatch(addUser(res.data.data));
-      return navigate("/feed");
-    } catch (err) {
-      const message =
-        err?.response?.data?.message ||
-        err?.response?.data ||
-        "Something went wrong";
 
-      setError(message);
-      console.error("❌ SignUp failed:", err);
+      dispatch(addUser(res.data.data));
+      navigate("/feed");
+    } catch (err) {
+      setError(err?.response?.data?.message || "Login failed");
     }
   };
 
   const handleSignUp = async () => {
+    if (!firstName || !lastName || !emailId || !password) {
+      setError("All fields are required");
+      return;
+    }
+
     try {
+      setError("");
       const res = await axios.post(
-        BASE_URL + "/signup",
-        { emailId, password, firstName, lastName },
-        {
-          withCredentials: true,
-        }
+        `${BASE_URL}/signup`,
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
       );
+
       dispatch(addUser(res.data.data));
-      return navigate("/profile");
+      navigate("/profile");
     } catch (err) {
-      setError(err?.response?.data || "Something Went Wrong!!!");
-      console.error("❌ SignUp failed:", err);
+      setError(err?.response?.data?.message || "Signup failed");
     }
   };
+
   return (
-    <div className="flex">
-      <div className="flex items-center justify-center h-120 w-screen">
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend">
-            {isLoggedIn ? "Login" : "SignUp"}
-          </legend>
+    <div className="flex justify-center items-center min-h-screen">
+      <fieldset className="fieldset bg-base-200 rounded-box w-xs border p-4">
+        <legend className="fieldset-legend">
+          {isLoginMode ? "Login" : "Sign Up"}
+        </legend>
 
-          {!isLoggedIn && (
-            <>
-              <label className="label">First Name</label>
-              <input
-                type="text"
-                className="input"
-                value={firstName}
-                placeholder="First Name"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-              <label className="label">Last Name</label>
-              <input
-                type="text"
-                className="input"
-                value={lastName}
-                placeholder="Last Name"
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </>
-          )}
+        {!isLoginMode && (
+          <>
+            <label className="label">First Name</label>
+            <input
+              className="input"
+              value={firstName}
+              placeholder="First Name"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
 
-          <label className="label">Email</label>
-          <input
-            type="email"
-            className="input"
-            value={emailId}
-            placeholder="Email"
-            onChange={(e) => setEmailId(e.target.value)}
-          />
+            <label className="label">Last Name</label>
+            <input
+              className="input"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </>
+        )}
 
-          <label className="label">Password</label>
-          <input
-            type="password"
-            className="input"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <p className="text-red-800 font-semibold ">{error}</p>
-          <button
-            className="btn btn-neutral mt-3"
-            onClick={isLoggedIn ? handleLogin : handleSignUp}
-          >
-            {isLoggedIn ? "Login" : "SignUp"}
-          </button>
+        <label className="label">Email</label>
+        <input
+          className="input"
+          type="email"
+          placeholder="Email"
+          value={emailId}
+          onChange={(e) => setEmailId(e.target.value)}
+        />
 
-          <p
-            className="flex justify-center cursor-pointer text-blue-600 hover:underline"
-            onClick={() => setIsLoggedIn(!isLoggedIn)}
-          >
-            {isLoggedIn
-              ? "New User ? SignUp here"
-              : "Existing User ? Login Here"}
-          </p>
-        </fieldset>
-      </div>
+        <label className="label">Password</label>
+        <input
+          className="input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {error && <p className="text-red-600 mt-2">{error}</p>}
+
+        <button
+          className="btn btn-neutral mt-4"
+          onClick={isLoginMode ? handleLogin : handleSignUp}
+        >
+          {isLoginMode ? "Login" : "Sign Up"}
+        </button>
+
+        <p
+          className="text-blue-600 text-center cursor-pointer mt-2"
+          onClick={() => {
+            setIsLoginMode(!isLoginMode);
+            setError("");
+          }}
+        >
+          {isLoginMode ? "New user? Sign up" : "Already have an account? Login"}
+        </p>
+      </fieldset>
     </div>
   );
 };
