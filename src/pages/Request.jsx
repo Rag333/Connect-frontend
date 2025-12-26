@@ -33,11 +33,11 @@ const Request = () => {
   }
   return (
     <div>
-      <h1 className=" font-bold text-2xl text-center m-10 "> Requests </h1>
+      <h1 className=" font-bold text-2xl text-center m-8 "> Requests </h1>
 
       <div className="flex flex-wrap">
         {requests.map((request) => (
-          <div key={request._id} className="flex-row items-start ">
+          <div key={request._id} className="flex-row items-start m-8 ">
             {<RequestCard request={request} requestId={request._id} />}
           </div>
         ))}
