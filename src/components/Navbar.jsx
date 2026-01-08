@@ -90,6 +90,9 @@ const Navbar = () => {
                 <li>
                   <Link to={"/feed"}>Feed</Link>
                 </li>
+                <li>
+                  <Link to={"/premium"}>Premium</Link>
+                </li>
 
                 <li>
                   <a onClick={handleLogout}>Logout</a>

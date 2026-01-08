@@ -8,6 +8,7 @@ import appStore from "./utils/appStore";
 import FeedPage from "./pages/FeedPage";
 import Connection from "./pages/Connection";
 import Request from "./pages/Request";
+import Premium from "./components/Premium";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/connection" element={<Connection />} />
             <Route path="/request" element={<Request />} />
+            <Route path="/premium" element={<Premium />} />
           </Route>
         </Routes>
       </BrowserRouter>
