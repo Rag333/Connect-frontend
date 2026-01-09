@@ -7,12 +7,14 @@ const Premium = () => {
   useEffect(() => {
     verifyPremiumUser();
   }, []);
+
   const verifyPremiumUser = async () => {
     const res = await axios.get(BASE_URL + "/premium/verify", {
       withCredentials: true,
     });
+
     if (res.data.isPremium) {
-      setIsPremiumUser(true);
+      setIsUserPremium(true);
     }
   };
   const handleBuyClick = async (type) => {
@@ -54,223 +56,93 @@ const Premium = () => {
     }
   };
   return isPremiumUser ? (
-    "You are Already a Premium User"
+    <div className="flex justify-center mt-20">
+      <h2 className="text-2xl font-bold text-green-500 bg-green-100 px-6 py-3 rounded-full shadow">
+        🎉 You’re already a Premium Member
+      </h2>
+    </div>
   ) : (
-    <div className=" flex gap-30 m-20 ">
-      {/* ............Gold.............................. */}
+    <div className="flex flex-col lg:flex-row justify-center items-center gap-10 my-20">
+      {/* ================= GOLD PLAN ================= */}
+      <div className="relative card w-96 bg-gradient-to-br from-yellow-100 to-yellow-50 shadow-xl hover:scale-105 transition-all duration-300 border border-yellow-400">
+        {/* Badge */}
+        <span className="absolute -top-4 left-1/2 -translate-x-1/2 badge badge-warning px-4 py-2 shadow-md">
+          ⭐ Most Popular
+        </span>
 
-      <div className="card w-96 bg-base-100 shadow-sm">
         <div className="card-body">
-          <span className="badge badge-xs badge-warning">Most Popular</span>
-          <div className="flex justify-between">
-            <h2 className="text-3xl font-bold">Gold Pass</h2>
-            <span className="text-xl">700 rs/mo</span>
-          </div>
-          <ul className="mt-6 flex flex-col gap-2 text-xs">
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-success"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>Chat Access</span>
+          <h2 className="text-3xl font-extrabold text-yellow-700 text-center">
+            Gold Pass
+          </h2>
+
+          <p className="text-center text-4xl font-bold text-yellow-600 mt-2">
+            ₹700
+            <span className="text-base font-medium text-gray-600">
+              {" "}
+              / month
+            </span>
+          </p>
+
+          <ul className="mt-8 space-y-3 text-sm">
+            <li className="flex items-center gap-3 text-success">
+              ✔ Unlimited Chat Access
             </li>
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-success"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>Ai Chat bot</span>
+            <li className="flex items-center gap-3 text-success">
+              ✔ AI Smart Chatbot
             </li>
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-success"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>100 swipes</span>
+            <li className="flex items-center gap-3 text-success">
+              ✔ 100 Daily Swipes
+            </li>
+            <li className="flex items-center gap-3 text-success">
+              ✔ Priority Matches
             </li>
 
-            <li className="opacity-50">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-base-content/50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span className="line-through">Seamless cloud integration</span>
-            </li>
-            <li className="opacity-50">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-base-content/50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span className="line-through">
-                Real-time collaboration tools
-              </span>
-            </li>
+            <li className="opacity-50 line-through">Video Call Support</li>
           </ul>
-          <div className="mt-6">
-            <button
-              className="btn btn-primary btn-block"
-              onClick={() => handleBuyClick("gold")}
-            >
-              Subscribe Gold
-            </button>
-          </div>
+
+          <button
+            className="btn btn-warning btn-block mt-8 text-lg font-semibold"
+            onClick={() => handleBuyClick("gold")}
+          >
+            Upgrade to Gold 🚀
+          </button>
         </div>
       </div>
-      {/* ............silver.............................. */}
-      <div className="card w-96 bg-base-100 shadow-sm">
+
+      {/* ================= SILVER PLAN ================= */}
+      <div className="card w-96 bg-base-100 shadow-lg hover:scale-105 transition-all duration-300 border border-base-300">
         <div className="card-body">
-          <span className="badge badge-xs badge-warning"> Popular</span>
-          <div className="flex justify-between">
-            <h2 className="text-3xl font-bold">Silver Pass</h2>
-            <span className="text-xl">300 rs/mo</span>
-          </div>
-          <ul className="mt-6 flex flex-col gap-2 text-xs">
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-success"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>Customizable style templates</span>
+          <h2 className="text-3xl font-bold text-center">Silver Pass</h2>
+
+          <p className="text-center text-4xl font-bold mt-2">
+            ₹300
+            <span className="text-base font-medium text-gray-600">
+              {" "}
+              / month
+            </span>
+          </p>
+
+          <ul className="mt-8 space-y-3 text-sm">
+            <li className="flex items-center gap-3 text-success">
+              ✔ Chat Access
             </li>
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-success"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>Batch processing capabilities</span>
+            <li className="flex items-center gap-3 text-success">
+              ✔ AI Chatbot
             </li>
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-success"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>AI-driven image enhancements</span>
+            <li className="flex items-center gap-3 text-success">
+              ✔ 30 Daily Swipes
             </li>
-            <li className="opacity-50">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-base-content/50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span className="line-through">Seamless cloud integration</span>
-            </li>
-            <li className="opacity-50">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 me-2 inline-block text-base-content/50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span className="line-through">
-                Real-time collaboration tools
-              </span>
-            </li>
+
+            <li className="opacity-50 line-through">Priority Matches</li>
+            <li className="opacity-50 line-through">Unlimited Swipes</li>
           </ul>
-          <div className="mt-6">
-            <button
-              className="btn btn-primary btn-block"
-              onClick={() => handleBuyClick("silver")}
-            >
-              Subscribe Silver
-            </button>
-          </div>
+
+          <button
+            className="btn btn-primary btn-block mt-8 text-lg"
+            onClick={() => handleBuyClick("silver")}
+          >
+            Choose Silver
+          </button>
         </div>
       </div>
     </div>

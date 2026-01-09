@@ -32,13 +32,22 @@ const Request = () => {
     );
   }
   return (
-    <div>
-      <h1 className=" font-bold text-2xl text-center m-8 "> Requests </h1>
+    <div className="flex items-center justify-center  flex-col">
+      <h1 className=" font-bold text-2xl text-center  m-4 gap-3  ">
+        {" "}
+        Requests{" "}
+      </h1>
 
-      <div className="flex flex-wrap">
-        {requests.map((request) => (
-          <div key={request._id} className="flex-row items-start m-8 ">
-            {<RequestCard request={request} requestId={request._id} />}
+      <div>
+        {requests.map((request, idx) => (
+          <div key={request._id}>
+            {
+              <RequestCard
+                request={request}
+                requestId={request._id}
+                idx={idx + 1}
+              />
+            }
           </div>
         ))}
       </div>

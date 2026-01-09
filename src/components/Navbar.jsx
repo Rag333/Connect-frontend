@@ -94,8 +94,8 @@ const Navbar = () => {
                   <Link to={"/premium"}>Premium</Link>
                 </li>
 
-                <li>
-                  <a onClick={handleLogout}>Logout</a>
+                <li className="bg-red-400 rounded-2xl">
+                  <Link onClick={handleLogout}>Logout</Link>
                 </li>
               </ul>
             </div>

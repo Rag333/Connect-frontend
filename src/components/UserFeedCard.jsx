@@ -22,29 +22,74 @@ const UserFeedCard = ({ user }) => {
   };
 
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-      <figure>
+    <div className="card bg-base-100 w-96 shadow-md hover:shadow-lg transition">
+      {/* Image */}
+      <figure className="px-4 pt-4">
         <img
-          src={photoUrl}
-          alt="User Photo"
-          className="h-80 w-80 mt-4 rounded-2xl"
+          src={photoUrl || "/default-avatar.png"}
+          alt={`${firstName} profile`}
+          className="h-80 w-80 rounded-2xl object-cover"
         />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">{firstName + " " + lastName}</h2>
-        {age && gender && <p>{age + " " + gender}</p>}
-        <p>{skills}</p>
-        <p>{about}</p>
 
-        <div className="card-actions justify-between mx-3">
+      <div className="card-body">
+        {/* Name */}
+        <h2 className="card-title">
+          {firstName} {lastName}
+        </h2>
+
+        {/* Age + Gender */}
+        {age && gender && (
+          <div className="flex items-center gap-3 my-1">
+            <span className="badge badge-ghost">{age}</span>
+
+            {gender === "male" && (
+              <span className="text-lg text-blue-500" title="Male">
+                ♂
+              </span>
+            )}
+
+            {gender === "female" && (
+              <span className="text-lg text-pink-500" title="Female">
+                ♀
+              </span>
+            )}
+
+            {gender === "other" && (
+              <span className="text-lg text-purple-500" title="Other">
+                ⚧
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Skills (ONLY if present) */}
+        {skills?.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {skills.map((skill) => (
+              <span key={skill} className="badge badge-outline text-xs">
+                {skill}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* About */}
+        <p className={`text-sm opacity-70 ${skills?.length ? "mt-2" : "mt-4"}`}>
+          {about}
+        </p>
+
+        {/* Actions */}
+        <div className="card-actions justify-between mt-4">
           <button
-            className="btn btn-secondary "
+            className="btn btn-secondary btn-sm"
             onClick={() => handleSendRequest("ignored", user._id)}
           >
-            Ignore{" "}
+            Ignore
           </button>
+
           <button
-            className="btn btn-primary"
+            className="btn btn-primary btn-sm"
             onClick={() => handleSendRequest("interested", user._id)}
           >
             Interested

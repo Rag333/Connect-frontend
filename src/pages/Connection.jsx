@@ -40,11 +40,14 @@ const Connection = () => {
   }
 
   return (
-    <div className=" justify-center my-10">
-      <h1 className=" font-bold text-2xl text-center"> Connection </h1>
-      <div className="flex flex-wrap gap-10">
-        {connections.map((connection) => (
-          <div>{<ConnectionCard connection={connection} />}</div>
+    <div className="flex flex-col items-center my-10">
+      <h1 className="font-bold text-2xl text-center mb-2">Connections</h1>
+
+      <div className="flex flex-col gap-3 w-2/4">
+        {connections.map((connection, idx) => (
+          <div key={connection._id}>
+            <ConnectionCard connection={connection} idx={idx + 1} />
+          </div>
         ))}
       </div>
     </div>

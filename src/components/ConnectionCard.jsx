@@ -1,26 +1,32 @@
 import React from "react";
 
-const ConnectionCard = ({ connection }) => {
+const ConnectionCard = ({ connection, idx }) => {
   return (
-    <div>
-      <div className="card bg-base-200 w-96  shadow-sm m-5">
-        <figure className="px-10 pt-7">
+    <div className="rounded-2xl m-2 p-2 flex justify-center">
+      <ul className="list bg-base-100 rounded-box shadow-md w-full">
+        <li className="list-row flex items-center gap-4 hover:bg-base-200 transition">
+          {/* Index */}
+          <div className="text-2xl tabular-nums opacity-50">{idx}</div>
+
+          {/* Avatar */}
           <img
-            src={connection.photoUrl}
-            alt="Shoes"
-            className="rounde h-80 w-80 rounded-xl"
+            className="size-10 rounded-box"
+            src={connection.photoUrl || "/default-avatar.png"}
+            alt={`${connection.firstName} profile`}
           />
-        </figure>
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">
-            {connection.firstName + " " + connection.lastName}
-          </h2>
-          <p>
-            {connection.age} {connection.gender}
-          </p>
-          <p>{connection.about}</p>
-        </div>
-      </div>
+
+          {/* User Info */}
+          <div className="list-col-grow">
+            <div className="font-medium">
+              {connection.firstName} {connection.lastName}
+            </div>
+            <div className="text-xs opacity-60">{connection.about}</div>
+          </div>
+
+          {/* Chat Button */}
+          <button className="btn btn-outline btn-sm ml-auto">Chat 💬</button>
+        </li>
+      </ul>
     </div>
   );
 };
