@@ -2,16 +2,25 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-neutral text-neutral-content p-4">
-      <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-sm">
-          © {new Date().getFullYear()} — All rights reserved
+    <footer className="bg-base-200 text-base-content border-t border-base-300">
+      <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Left */}
+        <p className="text-sm opacity-70">
+          © {new Date().getFullYear()}{" "}
+          <span className="font-medium">ConnectwMe</span>. All rights reserved.
         </p>
 
-        <div className="flex gap-4">
-          <a className="hover:text-primary cursor-pointer">Twitter</a>
-          <a className="hover:text-primary cursor-pointer">YouTube</a>
-          <a className="hover:text-primary cursor-pointer">Facebook</a>
+        {/* Right */}
+        <div className="flex gap-6 text-sm font-medium">
+          <a className="cursor-pointer hover:text-primary transition">
+            Twitter
+          </a>
+          <a className="cursor-pointer hover:text-primary transition">
+            YouTube
+          </a>
+          <a className="cursor-pointer hover:text-primary transition">
+            Facebook
+          </a>
         </div>
       </div>
     </footer>
