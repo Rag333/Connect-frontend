@@ -46,7 +46,7 @@ const Connection = () => {
       <div className="flex flex-col gap-3 w-2/4">
         {connections.map((connection, idx) => (
           <div key={connection._id}>
-            <ConnectionCard connection={connection} idx={idx + 1} />
+            <ConnectionCard connection={connection} idx={idx} />
           </div>
         ))}
       </div>
